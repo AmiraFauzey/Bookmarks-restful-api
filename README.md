@@ -107,10 +107,3 @@ Test API
 4. Delete Bookmark: http://localhost:8080/bookmarks/5
 5. Get all Bookmark: http://localhost:8080/bookmarks/searchResult?pageNumber=0&pageSize=10&sortBy=bookmarkTitle&sortDirection=ASC
 6. Search Bookmark by title and category name : http://localhost:8080/bookmarks/searchResult?pageNumber=0&pageSize=10&sortBy=bookmarkTitle&sortDirection=ASC&bookmarkTitle=Introduction&categoryName=Technology
-
-
-
-
-    
-8. 
-
