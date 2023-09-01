@@ -40,7 +40,7 @@ SQL queries to create tables for the database
     TAG_NAME VARCHAR(255),
     CATEGORY_ID INT,
     FOREIGN KEY (CATEGORY_ID) REFERENCES CATEGORY(CATEGORY_ID)
-);
+    );
     ```
     
 6. A BookmarkTag table
@@ -51,57 +51,57 @@ SQL queries to create tables for the database
     PRIMARY KEY (BOOKMARK_ID, TAG_ID),
     FOREIGN KEY (BOOKMARK_ID) REFERENCES BOOKMARK(BOOKMARK_ID),
     FOREIGN KEY (TAG_ID) REFERENCES TAG(TAG_ID)
-);
+   );
    ```
 
 Test API
 1) CREATE BOOKMARK : http://localhost:8080/bookmarks
    Request body:
    ```
-  {
-    "bookmarkTitle": "My New Bookmark",
-    "bookmarkUrl": "https://example.com",
-    "description": "This is a description of the bookmark",
-    "note": "Here's a note about the bookmark",
-    "category": {
-        "categoryId": 1,
-        "categoryName": "Technology"
-    },
-    "tags": [
-        {
-            "tagId": 1,
-            "tagName": "Artificial Intelligence"
-        },
-        {
-            "tagId": 2,
-            "tagName": "Machine Learning"
-        }
-    ]
-}
+     {
+       "bookmarkTitle": "My New Bookmark",
+       "bookmarkUrl": "https://example.com",
+       "description": "This is a description of the bookmark",
+       "note": "Here's a note about the bookmark",
+       "category": {
+           "categoryId": 1,
+           "categoryName": "Technology"
+       },
+       "tags": [
+           {
+               "tagId": 1,
+               "tagName": "Artificial Intelligence"
+           },
+           {
+               "tagId": 2,
+               "tagName": "Machine Learning"
+           }
+       ]
+   }
    ```
 2. UPDATE BOOKMARK: http://localhost:8080/bookmarks/3?categoryId=1&tagIds=2&tagIds=3
    Request body:
    ```
-   {
-    "bookmarkTitle": "Introduction to Data Structure",
-    "bookmarkUrl": "https://example.com",
-    "description": "This is a description of the bookmark",
-    "note": "Here's a note about the bookmark",
-    "category": {
-        "categoryId": 1,
-        "categoryName": "Technology"
-    },
-    "tags": [
-        {
-            "tagId": 3,
-            "tagName": "Data Structures & Algorithms"
-        },
-        {
-            "tagId": 4,
-            "tagName": "Complexity Theory"
-        }
-    ]
-}
+      {
+       "bookmarkTitle": "Introduction to Data Structure",
+       "bookmarkUrl": "https://example.com",
+       "description": "This is a description of the bookmark",
+       "note": "Here's a note about the bookmark",
+       "category": {
+           "categoryId": 1,
+           "categoryName": "Technology"
+       },
+       "tags": [
+           {
+               "tagId": 3,
+               "tagName": "Data Structures & Algorithms"
+           },
+           {
+               "tagId": 4,
+               "tagName": "Complexity Theory"
+           }
+       ]
+   }
    ```
 3. Get Bookmark by ID: http://localhost:8080/bookmarks/3
 4. Delete Bookmark: http://localhost:8080/bookmarks/5
