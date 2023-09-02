@@ -34,42 +34,30 @@ public class BookmarkController {
 
     //2. Get Bookmark By Id
     @GetMapping("{bookmarkId}")
-    public ResponseEntity<Bookmark> getBookmarkById(@PathVariable Integer bookmarkId) {
-        try {
+    public Bookmark getBookmarkById(@PathVariable Integer bookmarkId) {
             Bookmark bookmark = bookmarkService.findByBookmarkId(bookmarkId);
-            return ResponseEntity.ok(bookmark);
-        } catch (ResourceNotFoundException e) {
-            throw new ResourceNotFoundException("Not found Bookmark with id = " + bookmarkId);
-        }
+            return bookmark;
     }
 
     //3. Update the Bookmark
-    @PutMapping("/update/{bookmarkId}")
-    public ResponseEntity<Bookmark> updateBookmark(
+    @PutMapping("{bookmarkId}")
+    public Bookmark updateBookmark(
             @PathVariable Integer bookmarkId,
             @RequestBody Bookmark updatedBookmark,
             @RequestParam Integer categoryId,
             @RequestParam List<Integer> tagIds) throws Exception {
-        try {
+
             Bookmark updated = bookmarkService.updateBookmark(bookmarkId, updatedBookmark, categoryId, tagIds);
-            return ResponseEntity.ok(updated);
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+            return updated;
     }
 
     //4. Delete the Bookmark
     @DeleteMapping("{bookmarkId}")
-    public ResponseEntity<String> deleteBookmark(@PathVariable Integer bookmarkId) {
+    public void deleteBookmark(@PathVariable Integer bookmarkId) {
         Bookmark existingBookmark = bookmarkService.findByBookmarkId(bookmarkId);
 
         if (existingBookmark != null) {
             bookmarkService.deleteBookmark(bookmarkId);
-            return ResponseEntity.ok("Bookmark deleted successfully");
-        } else {
-            throw new ResourceNotFoundException("Not found Bookmark with id = " + bookmarkId);
         }
     }
 
@@ -81,11 +69,10 @@ public class BookmarkController {
 
     //6. Filter, Sorting, Pagination bookmarks
     @GetMapping("searchResult")
-    public ResponseEntity<Page<Bookmark>> getBookmarksResult(
+    public Page<Bookmark> getBookmarksResult(
             BookmarkPage bookmarkPage,
             BookmarkSearchCriteria bookmarkSearchCriteria){
-        return new ResponseEntity<>(bookmarkService.getBookmarks(bookmarkPage,bookmarkSearchCriteria),
-                HttpStatus.OK);
+        return bookmarkService.getBookmarks(bookmarkPage,bookmarkSearchCriteria);
     }
 
 }

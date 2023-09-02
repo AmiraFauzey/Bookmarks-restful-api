@@ -53,7 +53,7 @@ public class BookmarkService {
 
         // Retrieve the category object
         Integer categoryId = bookmark.getCategory().getCategoryId();
-        Category category = categoryRepository.findByCategoryId(categoryId);
+        Category category = categoryRepository.findById(categoryId).orElseThrow();
         savebookmark.setCategory(category);
 
         // Retrieve the tag objects and set them
@@ -72,7 +72,6 @@ public class BookmarkService {
         LOGGER.error("Before Check Bookmark Id");
         LOGGER.error("Result: {}", getbookmarkId);
         if(getbookmarkId == null){
-            LOGGER.error("After Check Job Id");
             throw new ResourceNotFoundException("Not found Bookmark with id = " + bookmarkId);
         }
         return bookmarkRepository.findByBookmarkId(bookmarkId);
@@ -95,7 +94,7 @@ public class BookmarkService {
         existingBookmark.setNote(bookmark.getNote());
 
         // Retrieve the existing category entity by its ID
-        Category existingCategory = categoryRepository.findByCategoryId(categoryId);
+        Category existingCategory = categoryRepository.findById(categoryId).orElseThrow();
         if (existingCategory == null) {
             throw new ResourceNotFoundException("Category not found with id: " + categoryId);
         }
@@ -134,19 +133,5 @@ public class BookmarkService {
             BookmarkPage bookmarkPage,
             BookmarkSearchCriteria bookmarkSearchCriteria){
         return bookmarkCriteriaRepository.findAllWithFilters(bookmarkPage,bookmarkSearchCriteria);
-    }
-
-    //7. Add Category along with the tags
-    public void createCategoryAndTags(CategoryTagRequestDto categoryTagRequestDto){
-        Category newCategory = new Category();
-        newCategory.setCategoryName(categoryTagRequestDto.getCategoryName());
-        Category savedCategory = categoryRepository.save(newCategory);
-
-        for (String tagName : categoryTagRequestDto.getTagNames()) {
-            Tag newTag = new Tag();
-            newTag.setTagName(tagName);
-            newTag.setCategory(savedCategory);
-            tagRepository.save(newTag);
-        }
     }
 }

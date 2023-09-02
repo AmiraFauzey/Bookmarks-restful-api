@@ -1,26 +1,23 @@
 package com.mira.bookmarkService.controller;
 
 import com.mira.bookmarkService.model.CategoryTagRequestDto;
-import com.mira.bookmarkService.service.BookmarkService;
+import com.mira.bookmarkService.service.CategoryService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("categories")
 public class CategoryController {
 
-    private final BookmarkService bookmarkService;
+    private final CategoryService categoryService;
 
-    public CategoryController(BookmarkService bookmarkService) {
-        this.bookmarkService = bookmarkService;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     @PostMapping
-    public ResponseEntity<String> createCategoryAndTags(@RequestBody CategoryTagRequestDto dto) {
-        bookmarkService.createCategoryAndTags(dto);
-        return ResponseEntity.ok("Category and tags created successfully");
+    public void createCategoryAndTags(@RequestBody CategoryTagRequestDto dto) {
+        categoryService.createCategoryAndTags(dto);
     }
 }
