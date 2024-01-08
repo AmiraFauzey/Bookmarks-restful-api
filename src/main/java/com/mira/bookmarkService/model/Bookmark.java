@@ -20,6 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Bookmark implements Serializable{
 
+    //This strategy relies on the auto-increment functionality
+    // provided by the database to generate unique identifier values automatically
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BOOKMARK_ID")
@@ -49,6 +51,20 @@ public class Bookmark implements Serializable{
     @JoinColumn(name = "CATEGORY_ID")
     private Category category;
 
+    //FetchType enum is used to specify the strategy for fetching data from the database
+    //There are two values of FetchType: LAZY and EAGER
+    /*
+    * The EAGER fetch type specifies that the data should be fetched eagerly,
+    * which means that the data is fetched when the parent entity is fetched.
+    * This can be more efficient in cases where the data is needed immediately,
+    * because it avoids the overhead of fetching the data later.
+    *
+    * FetchType. LAZY tells Hibernate to only fetch the related entities from the database
+    * when you use the relationship
+    * */
+
+    //@JoinTable will use a separate table to hold the relationship between BOOKMARK and TAG.
+    //BOOKMARK_TAG will hold the association between A and B
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "BOOKMARK_TAG",

@@ -20,8 +20,10 @@ import java.util.List;
 @RequestMapping("bookmarks")
 public class BookmarkController {
 
+    //dependency Injection
     private final BookmarkService bookmarkService;
 
+    //constructor injection
     public BookmarkController(BookmarkService bookmarkService) {
         this.bookmarkService = bookmarkService;
     }
@@ -43,11 +45,9 @@ public class BookmarkController {
     @PutMapping("{bookmarkId}")
     public Bookmark updateBookmark(
             @PathVariable Integer bookmarkId,
-            @RequestBody Bookmark updatedBookmark,
-            @RequestParam Integer categoryId,
-            @RequestParam List<Integer> tagIds) throws Exception {
+            @RequestBody Bookmark updatedBookmark) throws Exception {
 
-            Bookmark updated = bookmarkService.updateBookmark(bookmarkId, updatedBookmark, categoryId, tagIds);
+            Bookmark updated = bookmarkService.updateBookmark(bookmarkId, updatedBookmark);
             return updated;
     }
 
